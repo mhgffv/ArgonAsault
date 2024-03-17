@@ -8,13 +8,14 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] float xRange = 32.5f;
     [SerializeField] float yRange = 22f;
     [SerializeField] float positionPitchFactor = -2f;
-    [SerializeField] float controlPitchFactor = -10f;
+    [SerializeField] float controlPitchFactor = -30f;
 
     float yControl, xControl;
 
     void Update()
     {
         ProcessControl();
+        ProccesRotation();
     }
 
     void ProcessControl()
@@ -39,9 +40,9 @@ public class PlayerMover : MonoBehaviour
         yControl = Input.GetAxis("Vertical");
 
         float pitch = transform.localPosition.y * positionPitchFactor + yControl * controlPitchFactor;
-        float yaw = 0f;
-        float roll = 0f;
-
+        float yaw = transform.localPosition.x * -positionPitchFactor + xControl * -controlPitchFactor;
+        float roll = xControl * controlPitchFactor;
+        
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
 }
